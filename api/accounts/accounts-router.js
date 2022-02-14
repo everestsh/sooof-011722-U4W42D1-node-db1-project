@@ -5,7 +5,7 @@ const Account = require('./accounts-model')
 // TEST ERR: http get :9000/api/accounts -v
 router.get("/", async (req, res, next) => {
   // DO YOUR MAGIC
-  // http get :7000/api/accounts -v
+  // http get :9000/api/accounts -v
   // res.send('TEST: GET /api/accounts')
   try {
     // throw new Error('argh!!!')
@@ -20,7 +20,7 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", md.checkAccountId, async (req, res, next) => {
   // DO YOUR MAGIC
-  // http get :7000/api/accounts/1 -v
+  // http get :9000/api/accounts/1 -v
   // res.send('TEST: GET /api/accounts/1')
   try {
     // res.json("get account by id");
@@ -38,12 +38,16 @@ router.post(
   md.checkAccountNameUnique,
   async (req, res, next) => {
     // DO YOUR MAGIC
-    // http post :7000/api/accounts name=fff budget=ffffff -v
+    // http post :9000/api/accounts name=fff budget=ffffff -v
     // res.json("TEST: create by endpoint")
     try {
-      res.json("post account");
+      // res.json("post account");
       // const account = await Account.create(req.body)
-      // res.status(201).json(account)
+      const account = await Account.create({
+        name: req.body.name.trim(),
+        budget: req.body.budget,
+      })
+      res.status(201).json(account)
     } catch (err) {
       next(err);
     }
@@ -54,24 +58,29 @@ router.put(
   "/:id",
   md.checkAccountId,
   md.checkAccountPayload,
-  (req, res, next) => {
+  async (req, res, next) => {
     // DO YOUR MAGIC
-    // http put :7000/api/accounts/2 name=fff budget=ffffff -v
+    // http put :9000/api/accounts/2 name=fff budget=ffffff -v
     // res.json('TEST: update by endpoint')
     try {
-      res.json("put account by id");
+      // res.json("put account by id");
+      const account = await Account.updateById(req.params.id, req.body)
+      res.json(account)
     } catch (err) {
       next(err);
     }
   }
 );
 
-router.delete("/:id", md.checkAccountId, (req, res, next) => {
+//  http delete :9000/api/accounts/14 -v
+router.delete("/:id", md.checkAccountId, async (req, res, next) => {
   // DO YOUR MAGIC
-  // http delete :7000/api/accounts/7  -v
+  // http delete :9000/api/accounts/7  -v
   // res.json('test delete by endpoint')
   try {
-    res.json("delete account by id");
+    // res.json("delete account by id");
+    const delAccount = await Account.deleteById(req.params.id)
+    res.json(req.account)
   } catch (err) {
     next(err);
   }
