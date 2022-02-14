@@ -119,3 +119,13 @@ The following exercises **require research**, the concepts needed to complete th
     sortdir: 'desc'
   }
   ```
+
+
+```
+select * from accounts where id = 7;
+insert into accounts (name, budget) values ('account-14', 1.1);
+insert into accounts (name, budget ) values ('acme', '1');
+
+
+https://bloomtech-1.wistia.com/medias/cfmhiymcj7
+```
